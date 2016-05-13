@@ -14,7 +14,7 @@ server {
 
     resolver 8.8.8.8;
     ssl_stapling on;
-    ssl_trusted_certificate <%= domain.cert_path %>;
+    ssl_trusted_certificate <%= domain.signed_cert_path %>;
 
     <% if ENV['HSTS'] && ENV['HSTS'].downcase == 'true' %>
     <% if ENV['HSTS-SUBDOMAINS'] && ENV['HSTS-SUBDOMAINS'].downcase == 'true' %>
