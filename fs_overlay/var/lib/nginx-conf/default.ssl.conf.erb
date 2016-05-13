@@ -18,9 +18,9 @@ server {
 
     <% if ENV['HSTS'] && ENV['HSTS'].downcase == 'true' %>
     <% if ENV['HSTS-SUBDOMAINS'] && ENV['HSTS-SUBDOMAINS'].downcase == 'true' %>
-    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
     <% else %>
-    add_header Strict-Transport-Security "max-age=31536000;";
+    add_header Strict-Transport-Security "max-age=31536000";
     <% end %>
     <% end %>
 
