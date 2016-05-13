@@ -12,15 +12,17 @@ server {
     ssl_ciphers "ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:EDH-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:HIGH:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4";
     ssl_prefer_server_ciphers on;
 
-    # enable ocsp stapling (mechanism by which a site can convey certificate revocation information to visitors in a privacy-preserving, scalable manner)
-    # http://blog.mozilla.org/security/2013/07/29/ocsp-stapling-in-firefox/
     resolver 8.8.8.8;
     ssl_stapling on;
     ssl_trusted_certificate <%= domain.cert_path %>;
 
-    # config to enable HSTS(HTTP Strict Transport Security) https://developer.mozilla.org/en-US/docs/Security/HTTP_Strict_Transport_Security
-    # to avoid ssl stripping https://en.wikipedia.org/wiki/SSL_stripping#SSL_stripping
+    <% if ENV['HSTS'] && ENV['HSTS'].downcase == 'true' %>
+    <% if ENV['HSTS-SUBDOMAINS'] && ENV['HSTS-SUBDOMAINS'].downcase == 'true' %>
+    add_header Strict-Transport-Security "max-age=31536000; includeSubdomains;";
+    <% else %>
     add_header Strict-Transport-Security "max-age=31536000;";
+    <% end %>
+    <% end %>
 
     ssl_dhparam <%= dhparam_path %>;
 
