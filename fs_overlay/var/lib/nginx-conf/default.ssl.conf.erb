@@ -16,6 +16,11 @@ server {
     ssl_stapling on;
     ssl_trusted_certificate <%= domain.signed_cert_path %>;
 
+    <% if ENV['AUTH-REQUIRED'] && ( ENV['AUTH-REQUIRED'].include?(domain.name) || ENV['AUTH-REQUIRED'].downcase == 'all' ) %>
+    auth_basic "Restricted";
+    auth_basic_user_file /etc/nginx/htpasswd;
+    <% end %>
+
     <% if ENV['HSTS'] && ENV['HSTS'].downcase == 'true' %>
     <% if ENV['HSTS-SUBDOMAINS'] && ENV['HSTS-SUBDOMAINS'].downcase == 'true' %>
     add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
