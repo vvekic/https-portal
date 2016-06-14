@@ -40,3 +40,14 @@ virtualhosts https-portal is serving.
 
 Then mount container file `/etc/nginx/htpasswd` to your host,
 and populate it with htpasswd utility.
+
+## Known issues
+
+Nginx does not send HSTS header with pages that require authentication
+but have not yet been authenticated (ie. with HTTP response 401). This
+results to a situation where HSTS seems not to be enabled on auth required
+pages when authentication is not yet completed by client.
+
+See more info at http://serverfault.com/questions/628448/nginx-hsts-on-a-page-with-www-authentication
+
+I am currently investigating workaround for this.
