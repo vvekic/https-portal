@@ -16,6 +16,13 @@ server {
     ssl_stapling on;
     ssl_trusted_certificate <%= domain.signed_cert_path %>;
 
+    <% if ENV['PROXY_BUFFERING'] && ENV['PROXY_BUFFERING'].downcase == 'false' %>
+    proxy_buffering off;
+    <% else %>
+    <% if ENV['PROXY_REQUEST_BUFFERING'] && ENV['PROXY_REQUEST_BUFFERING'].downcase == 'false' %>
+    proxy_request_buffering off;
+    <% else %>
+
     <% if ENV['AUTH-REQUIRED'] && ( ENV['AUTH-REQUIRED'].include?(domain.name) || ENV['AUTH-REQUIRED'].downcase == 'all' ) %>
     auth_basic "Restricted";
     auth_basic_user_file /etc/nginx/htpasswd;
