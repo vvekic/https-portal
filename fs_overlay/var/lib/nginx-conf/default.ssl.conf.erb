@@ -25,6 +25,10 @@ server {
     auth_basic_user_file /etc/nginx/htpasswd;
     <% end %>
 
+    <% if ENV['AUTOINDEX'] && ENV['AUTOINDEX'].include?(domain.name) %>
+    autoindex on;
+    <% end %>
+
     <% if ENV['HSTS'] && ENV['HSTS'].downcase == 'true' %>
     <% if ENV['HSTS-SUBDOMAINS'] && ENV['HSTS-SUBDOMAINS'].downcase == 'true' %>
     add_header Strict-Transport-Security "max-age=31536000; includeSubdomains";
