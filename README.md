@@ -47,6 +47,13 @@ protected by basic authentication:
 Then mount container file `/etc/nginx/htpasswd` to your host,
 and populate it with htpasswd utility.
 
+### Directory listing
+
+To enable nginx's directory listing, specify the virtual hosts
+you want to allow listing directory contents:
+
+`AUTOINDEX: allow-listing.hostname.tld`
+
 ## Known issues
 
 Nginx does not send HSTS header with pages that require authentication
