@@ -16,7 +16,11 @@ server {
     ssl_stapling on;
     ssl_trusted_certificate <%= domain.signed_cert_path %>;
 
-    <% if ENV['AUTH-REQUIRED'] && ( ENV['AUTH-REQUIRED'].include?(domain.name) || ENV['AUTH-REQUIRED'].downcase == 'all' ) %>
+    <% if ENV['AUTH-REQUIRED'] && (
+       ENV['AUTH-REQUIRED'].downcase == 'all' ||
+       ( ENV['AUTH-REQUIRED'].include?(domain.name) || ENV['AUTH-REQUIRED'].downcase == 'all' ) ||
+       ( ENV['AUTH-REQUIRED'].downcase == 'all-but' && !ENV['AUTH-NOTREQUIRED'].include?(domain.name) )
+    ) %>
     auth_basic "Restricted";
     auth_basic_user_file /etc/nginx/htpasswd;
     <% end %>
