@@ -38,6 +38,12 @@ virtualhosts https-portal is serving.
 
 `AUTH-REQUIRED: all`
 
+or specify `all-but` and then list hosts that should NOT be
+protected by basic authentication:
+
+`AUTH-REQUIRED: all-but`
+`AUTH-NOTREQUIRED: no-auth.hostname.tld`
+
 Then mount container file `/etc/nginx/htpasswd` to your host,
 and populate it with htpasswd utility.
 
